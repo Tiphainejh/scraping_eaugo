@@ -158,5 +158,5 @@ produits = {"adoucisseur": {"json": "adoucisseurs.json", "excel": "comparaison_a
 "chauffe_eau": {"json": "chauffe_eaux.json", "excel": "comparaison_chauffe_eaux.xlsx", "nb_stores": 5, "type": "Chauffe eaux"}}
 
 
-create_file(produits["adoucisseur"])
-create_file(produits["chauffe_eau"])
+for c in category :
+    create_file(category[c])
