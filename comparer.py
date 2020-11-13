@@ -18,7 +18,6 @@ options.add_argument('--ignore-certificate-errors')
 options.add_argument('--ignore-ssl-errors')
 options.add_argument('log-level=3')
 browser = webdriver.Chrome("chromedriver.exe", options=options)
-browser.implicitly_wait(10)
 
 # récupère le prix d'un produit spécifique
 def get_price(url, site):
@@ -36,7 +35,12 @@ def get_price(url, site):
                 if price != None :
                     price = price['content']
             elif site == "manomano":
-                price = soup.find(class_="prices__price prices__main-price__price").find(class_="price-integer")
+                price = soup.find(class_="prices__price prices__main-price__price")
+                while price == None: #sometimes selenium returns None
+                    r = requests.get(url)
+                    soup = BeautifulSoup(r.text, 'lxml')
+                    price = soup.find(class_="prices__price prices__main-price__price")
+                price=price.find(class_="price-integer")
             elif site == "domotelec" or site == "factorydirect":
                 price = soup.find(class_="price")
             elif site == "eau-go" or site == "domomat":
