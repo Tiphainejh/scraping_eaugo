@@ -1,8 +1,8 @@
 from cx_Freeze import setup, Executable
 #base = "Win32GUI"
 base = "Console"
-executables = [Executable("comparer_adoucisseurs.py", base=base), Executable("comparer_chauffe_eaux.py", base=base)]
-includefiles = ["adoucisseurs.json","chauffe_eaux.json", "chromedriver.exe"]
+executables = [Executable("comparer.py", base=base)]
+includefiles = ["adoucisseurs.json","chauffe_eaux.json", "chromedriver.exe", "README.md"]
 packages = ["time", "bs4", "json", "selenium", "chromedriver_binary", "xlsxwriter", "datetime", "os", "pandas", "urllib3"]
 options = {
     'build_exe': {    

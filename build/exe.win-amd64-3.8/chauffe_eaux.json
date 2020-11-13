@@ -33,10 +33,260 @@
     "id": "051020-L",
     "urls": {
         "sobrico": "https://www.sobrico.com/chauffe-eau-et-ballon-d-eau-chaude/17446-chauffe-eau-200l-chauffeo-plus-vertical-mural-steatite-atlantic-051020.html",
-        "factorydirect": "",
+        "factorydirect": "https://www.factorydirect.fr/chauffe-eau-steatite-atlantic-chauffeo-plus-200-litres-910.php",
         "domotelec": "https://www.domotelec.fr/chauffe-eau-ballon-d-eau-chaude/chauffe-eau-electrique/chauffeo-200-litres-vertical-mural.html",
         "domomat": "https://www.domomat.com/18804-chauffe-eau-electrique-chauffeo-plus-vertical-mural-200l-2200w-1480x550x530-mm-atlantic-051020.html",
         "eau-go": "https://www.eau-go.fr/chauffe-eau-electrique-200l-atlantic-chauffeo-plus-vertical-mural-515.html"
+        }
+    },
+  "Chauffe-eau électrique 300L THERMOR Duralis Vertical Stable": {
+    "id": "292045-L",
+    "urls": {
+        "sobrico": "https://www.sobrico.com/chauffe-eau-et-ballon-d-eau-chaude/17734-chauffe-eau-300l-vertical-stable-duralis-aci-hybride-monophase-thermor-292045.html",
+        "factorydirect": "https://www.factorydirect.fr/chauffe-eau-steatite-aci-thermor-duralis-300-litres-300l-525.php",
+        "domotelec": "https://www.domotelec.fr/chauffe-eau-ballon-d-eau-chaude/chauffe-eau-electrique/chauffe-eau-electrique-anti-corrosion/duralis-aci-hybride-300-litres-stable.html",
+        "domomat": "https://www.domomat.com/12308-chauffe-eau-electrique-duralis-vertical-stable-300l-3000w-575x1780mm-blanc-thermor-292045.html",
+        "eau-go": "https://www.eau-go.fr/chauffe-eau-electrique-300l-thermor-duralis-vertical-stable-39.html"
+        }
+    },
+  "Chauffe-eau électrique 200L ATLANTIC Zénéo Vertical Mural": {
+    "id": "153120-L",
+    "urls": {
+        "sobrico": "https://www.sobrico.com/chauffe-eau-et-ballon-d-eau-chaude/14869-chauffe-eau-200l-zeneo-vertical-mural-aci-hybride-atlantic-153120.html",
+        "factorydirect": "https://www.factorydirect.fr/chauffe-eau-steatite-atlantic-zeneo-200-litres-aci-916.php",
+        "domotelec": "https://www.domotelec.fr/chauffe-eau-ballon-d-eau-chaude/chauffe-eau-electrique/chauffe-eau-electrique-anti-corrosion/zeneo-aci-hybride-200-litres-vertical-mural-153120.html",
+        "domomat": "https://www.domomat.com/16250-chauffe-eau-electrique-aci-hybride-zeneo-vertical-mural-200l-atlantic-153120.html",
+        "eau-go": "https://www.eau-go.fr/chauffe-eau-electrique-200l-atlantic-zeneo-vertical-mural-104.html"
+        }
+    },
+  "Chauffe-eau électrique 300L ATLANTIC Chaufféo Plus vertical sur socle": {
+    "id": "052130-L",
+    "urls": {
+        "sobrico": "",
+        "factorydirect": "https://www.factorydirect.fr/chauffe-eau-electrique-atlantic-chauffeo-plus-300-litres-921.php",
+        "domotelec": "",
+        "domomat": "",
+        "eau-go": "https://www.eau-go.fr/chauffe-eau-electrique-300l-atlantic-chauffeo-plus-vertical-sur-socle-506.html"
+        }
+    },
+  "Chauffe-eau électrique 100L - THERMOR Steatis Vertical Mural": {
+    "id": "261025-L",
+    "urls": {
+        "sobrico": "https://www.sobrico.com/chauffe-eau-et-ballon-d-eau-chaude/17448-chauffe-eau-300l-chauffeo-plus-vertical-sur-socle-steatite-atlantic-052130.html",
+        "factorydirect": "https://www.factorydirect.fr/chauffe-eau-steatite-thermor-100-litres-100l-517.php",
+        "domotelec": "https://www.domotelec.fr/chauffe-eau-ballon-d-eau-chaude/chauffe-eau-electrique/chauffeo-300-litres-vertical-stable.html",
+        "domomat": "https://www.domomat.com/18807-chauffe-eau-electrique-chauffeo-plus-vertical-sur-socle-300l-3000w-1765x640x570-mm-atlantic-052130.html",
+        "eau-go": "https://www.eau-go.fr/chauffe-eau-electrique-100l-thermor-steatis-vertical-mural-livraison-gratuite-193.html"
+        }
+    },
+  "Chauffe-eau électrique 100L THERMOR Blindé Vertical Mural": {
+    "id": "261049-L",
+    "urls": {
+        "sobrico": "https://www.sobrico.com/chauffe-eau-et-ballon-d-eau-chaude/17700-chauffe-eau-100l-vertical-mural-blinde-o505-cm-standard-monophase-thermor-261049.html",
+        "factorydirect": "https://www.factorydirect.fr/Chauffe_eau_electrique_blindeThermor_100_Litres_100L-625.php",
+        "domotelec": "",
+        "domomat": "https://www.domomat.com/34147-chauffe-eau-electrique-blinde-1200w-vertical-100l-2-personnes-thermor-261049.html",
+        "eau-go": "https://www.eau-go.fr/chauffe-eau-electrique-100l-thermor-blinde-vertical-mural-562.html"
+        }
+    },
+  "Chauffe-eau électrique 200L ATLANTIC Vizengo Vertical Mural": {
+    "id": "154120-L",
+    "urls": {
+        "sobrico": "",
+        "factorydirect": "",
+        "domotelec": "",
+        "domomat": "",
+        "eau-go": "https://www.eau-go.fr/chauffe-eau-electrique-200l-atlantic-vizengo-vertical-mural-112.html"
+        }
+    },
+  "Chauffe-eau électrique 150L ATLANTIC Chaufféo horizontal sortie basse": {
+    "id": "023115-L",
+    "urls": {
+        "sobrico": "https://www.sobrico.com/chauffe-eau-et-ballon-d-eau-chaude/17451-chauffe-eau-200l-vertical-mural-steatite-vizengo-aci-hybride-atlantic-154120.html",
+        "factorydirect": "https://www.factorydirect.fr/chauffe-eau-steatite-atlantic-zeneo-200-litres-aci-916.php",
+        "domotelec": "https://www.domotelec.fr/chauffe-eau-ballon-d-eau-chaude/chauffe-eau-electrique/vizengo-aci-200-litres-vertical-mural.html",
+        "domomat": "https://www.domomat.com/18773-chauffe-eau-electrique-vizengo-vertical-mural-200-l-2200-w-1545x550x530-mm-atlantic-154120.html",
+        "eau-go": "https://www.eau-go.fr/chauffe-eau-electrique-150l-atlantic-chauffeo-horizontal-sortie-basse-84.html"
+        }
+    },
+  "Chauffe-eau électrique 300L DE DIETRICH Cor-Email THS Vertical Socle": {
+    "id": "7605044-L",
+    "urls": {
+        "sobrico": "",
+        "factorydirect": "",
+        "domotelec": "",
+        "domomat": "https://www.domomat.com/45141-chauffe-eau-electrique-cor-email-ths-3000w-pose-au-sol-300l-de-dietrich-7605044.html",
+        "eau-go": "https://www.eau-go.fr/chauffe-eau-electrique-300l-de-dietrich-cor-email-ths-vertical-sur-socle-13.html"
+        }
+    },
+  "Chauffe-eau électrique 100L ATLANTIC Chaufféo horizontal sortie basse": {
+    "id": "023110-L",
+    "urls": {
+        "sobrico": "https://www.sobrico.com/chauffe-eau-et-ballon-d-eau-chaude/17441-chauffe-eau-100l-chauffeo-horizontal-mural-blinde-atlantic-023110.html",
+        "factorydirect": "",
+        "domotelec": "",
+        "domomat": "https://www.domomat.com/12283-chauffe-eau-electrique-blinde-horizontal-mural-mono-100l-1200w-530x840mm-atlantic-023110.html",
+        "eau-go": "https://www.eau-go.fr/chauffe-eau-electrique-100l-atlantic-100-chauffeo-horizontal-sortie-basse-83.html"
+        }
+    },
+  "Chauffe-eau électrique 100L DE DIETRICH CEB Vertical Mural": {
+    "id": "89789651-L",
+    "urls": {
+        "sobrico": "",
+        "factorydirect": "",
+        "domotelec": "",
+        "domomat": "https://www.domomat.com/45345-chauffe-eau-electrique-ceb-2200w-pose-verticale-200l-de-dietrich-89789671.html",
+        "eau-go": "https://www.eau-go.fr/chauffe-eau-electrique-100l-de-dietrich-ceb-vertical-mural-23.html"
+        }
+    },
+  "Chauffe-eau électrique 150L ATLANTIC Zénéo Vertical Mural": {
+    "id": "153115-L",
+    "urls": {
+        "sobrico": "https://www.sobrico.com/chauffe-eau-et-ballon-d-eau-chaude/14868-chauffe-eau-150l-zeneo-aci-hybride-vertical-mural-atlantic-153115.html",
+        "factorydirect": "https://www.factorydirect.fr/chauffe-eau-steatite-atlantic-zeneo-150-litres-aci-915.php",
+        "domotelec": "https://www.domotelec.fr/chauffe-eau-ballon-d-eau-chaude/chauffe-eau-electrique/chauffe-eau-electrique-anti-corrosion/zeneo-aci-hybride-150-litres-vertical-mural-1531115.html",
+        "domomat": "https://www.domomat.com/16251-chauffe-eau-electrique-aci-hybride-zeneo-vertical-mural-150l-atlantic-153115.html",
+        "eau-go": "https://www.eau-go.fr/chauffe-eau-electrique-150l-atlantic-zeneo-vertical-mural-530.html"
+        }
+    },
+  "Chauffe-eau électrique 200L ATLANTIC Zénéo - Vertical sur socle": {
+    "id": "154320-L",
+    "urls": {
+        "sobrico": "https://www.sobrico.com/chauffe-eau-et-ballon-d-eau-chaude/17453-chauffe-eau-200l-zeneo-vertical-sur-socle-steatite-aci-hybride-atlantic-154320.html",
+        "factorydirect": "",
+        "domotelec": "https://www.domotelec.fr/chauffe-eau-ballon-d-eau-chaude/chauffe-eau-electrique/chauffe-eau-electrique-anti-corrosion/zeneo-aci-hybride-200-litres-vertical-sur-socle-154320.html",
+        "domomat": "https://www.domomat.com/16245-chauffe-eau-electrique-aci-hybride-zeneo-vertical-sur-socle-200l-atlantic-154320.html",
+        "eau-go": "https://www.eau-go.fr/chauffe-eau-electrique-200l-atlantic-zeneo-vertical-sur-socle-106.html"
+        }
+    },
+  "Chauffe-eau électrique 200L ATLANTIC Chaufféo horizontal sortie basse": {
+    "id": "023120-L",
+    "urls": {
+        "sobrico": "https://www.sobrico.com/chauffe-eau-et-ballon-d-eau-chaude/17443-chauffe-eau-200l-chauffeo-horizontal-mural-blinde-atlantic-023120.html",
+        "factorydirect": "",
+        "domotelec": "",
+        "domomat": "https://www.domomat.com/12286-chauffe-eau-electrique-blinde-horizontal-mural-mono-200l-2200w-530x1460mm-atlantic-023120.html",
+        "eau-go": "https://www.eau-go.fr/chauffe-eau-electrique-200l-atlantic-chauffeo-horizontal-sortie-basse-85.html"
+        }
+    },
+  "Chauffe-eau électrique 150L ATLANTIC Zénéo Vertical sur Socle": {
+    "id": "154315-L",
+    "urls": {
+        "sobrico": "https://www.sobrico.com/chauffe-eau-et-ballon-d-eau-chaude/17452-chauffe-eau-150l-zeneo-vertical-sur-socle-steatite-aci-hybride-atlantic-154315.html",
+        "factorydirect": "",
+        "domotelec": "",
+        "domomat": "https://www.domomat.com/16246-chauffe-eau-electrique-aci-hybride-zeneo-vertical-sur-socle-150l-atlantic-154315.html",
+        "eau-go": "https://www.eau-go.fr/chauffe-eau-electrique-150l-atlantic-zeneo-vertical-sur-socle-105.html"
+        }
+    },
+  "Chauffe-eau électrique 150L DE DIETRICH CEB Vertical Mural": {
+    "id": "89789661-L",
+    "urls": {
+        "sobrico": "",
+        "factorydirect": "",
+        "domotelec": "",
+        "domomat": "https://www.domomat.com/45345-chauffe-eau-electrique-ceb-2200w-pose-verticale-200l-de-dietrich-89789671.html",
+        "eau-go": "https://www.eau-go.fr/chauffe-eau-electrique-150l-de-dietrich-ceb-vertical-mural-24.html"
+        }
+    },
+  "Chauffe-eau électrique 200L THERMOR Duralis Vertical Stable": {
+    "id": "282072-L",
+    "urls": {
+        "sobrico": "https://www.sobrico.com/chauffe-eau-et-ballon-d-eau-chaude/17732-chauffe-eau-200l-vertical-stable-duralis-aci-hybride-monophase-thermor-282072.html",
+        "factorydirect": "https://www.factorydirect.fr/chauffe-eau-steatite-thermor-duralis-aci-stable-200-litres-1060.php",
+        "domotelec": "https://www.domotelec.fr/chauffe-eau-ballon-d-eau-chaude/chauffe-eau-electrique/chauffe-eau-electrique-anti-corrosion/duralis-aci-hybride-200-litres-stable.html",
+        "domomat": "https://www.domomat.com/17074-chauffe-eau-electrique-duralis-vertical-stable-200l-2400w-575x1275mm-blanc-thermor-282072.html",
+        "eau-go": "https://www.eau-go.fr/chauffe-eau-electrique-200l-thermor-duralis-vertical-stable-182.html"
+        }
+    },
+  "Chauffe-eau électrique 250L ATLANTIC Vizengo Vertical Sur Socle": {
+    "id": "154425-L",
+    "urls": {
+        "sobrico": "",
+        "factorydirect": "",
+        "domotelec": "",
+        "domomat": "",
+        "eau-go": "https://www.eau-go.fr/chauffe-eau-electrique-250l-atlantic-vizengo-vertical-sur-socle-113.html"
+        }
+    },
+  "Chauffe-eau électrique 250L THERMOR Duralis Vertical Stable": {
+    "id": "282074-L",
+    "urls": {
+        "sobrico": "https://www.sobrico.com/chauffe-eau-et-ballon-d-eau-chaude/17456-chauffe-eau-250l-vizengo-vertical-sur-socle-steatite-aci-hybride-atlantic-154425.html",
+        "factorydirect": "https://www.factorydirect.fr/chauffe-eau-steatite-aci-thermor-duralis-250-litres-250l-524.php",
+        "domotelec": "https://www.domotelec.fr/chauffe-eau-ballon-d-eau-chaude/chauffe-eau-electrique/vizengo-aci-250-litres-vertical-sur-socle.html",
+        "domomat": "https://www.domomat.com/18777-chauffe-eau-electrique-vizengo-vertical-sur-socle-250-l-3000-w-1805x590x530-mm-atlantic-154425.html",
+        "eau-go": "https://www.eau-go.fr/chauffe-eau-electrique-250l-thermor-duralis-vertical-stable-36.html"
+        }
+    },
+  "Chauffe-eau électrique 300L THERMOR Steatis Stable": {
+    "id": "292031-L",
+    "urls": {
+        "sobrico": "https://www.sobrico.com/chauffe-eau-et-ballon-d-eau-chaude/17738-chauffe-eau-300l-vertical-stable-steatis-steatite-monophase-thermor-292031.html",
+        "factorydirect": "https://www.factorydirect.fr/chauffe-eau-steatite-thermor-300-litres-300l-521.php",
+        "domotelec": "https://www.domotelec.fr/chauffe-eau-ballon-d-eau-chaude/chauffe-eau-electrique/steatis-300-litres-stable.html",
+        "domomat": "https://www.domomat.com/22613-chauffe-eau-electrique-steatis-300-l-vertical-stable-3000w-1780x575x575mm-blanc-thermor-292031.html",
+        "eau-go": "https://www.eau-go.fr/chauffe-eau-electrique-300l-thermor-steatis-stable-38.html"
+        }
+    },
+  "Chauffe-eau électrique 150L ATLANTIC Vizengo Vertical Mural": {
+    "id": "154115-L",
+    "urls": {
+        "sobrico": "",
+        "factorydirect": "",
+        "domotelec": "",
+        "domomat": "",
+        "eau-go": "https://www.eau-go.fr/chauffe-eau-electrique-150l-atlantic-vizengo-vertical-mural-111.html"
+        }
+    },
+  "Chauffe-eau électrique 200L THERMOR Duralis Mural Vertical": {
+    "id": "281077-L",
+    "urls": {
+        "sobrico": "https://www.sobrico.com/chauffe-eau-et-ballon-d-eau-chaude/17450-chauffe-eau-150l-vertical-mural-vizengo-steatite-aci-hybride-atlantic-154115.html",
+        "factorydirect": "https://www.factorydirect.fr/chauffe-eau-steatite-aci-thermor-duralis-200-litres-200l-523.php",
+        "domotelec": "https://www.domotelec.fr/chauffe-eau-ballon-d-eau-chaude/chauffe-eau-electrique/vizengo-aci-150-litres-vertical-mural.html",
+        "domomat": "https://www.domomat.com/18771-chauffe-eau-electrique-vizengo-vertical-mural-150-l-1800-w-1230x550x530-mm-atlantic-154115.html",
+        "eau-go": "https://www.eau-go.fr/chauffe-eau-electrique-200l-thermor-duralis-mural-vertical-34.html"
+        }
+    },
+  "Chauffe-eau électrique 200L ATLANTIC Chauffeo vertical sur socle": {
+    "id": "022120-L",
+    "urls": {
+        "sobrico": "https://www.sobrico.com/chauffe-eau-et-ballon-d-eau-chaude/17438-chauffe-eau-200l-chauffeo-vertical-sur-socle-blinde-atlantic-022120.html",
+        "factorydirect": "",
+        "domotelec": "",
+        "domomat": "https://www.domomat.com/12299-chauffe-eau-electrique-blinde-vertical-socle-mono-200l-2200w-1485x600x530mm-atlantic-022120.html",
+        "eau-go": "https://www.eau-go.fr/chauffe-eau-electrique-200l-atlantic-chauffeo-vertical-sur-socle-46.html"
+        }
+    },
+  "Chauffe-eau électrique 200L DE DIETRICH Cor-Email THS Vertical Mural": {
+    "id": "100019786-L",
+    "urls": {
+        "sobrico": "",
+        "factorydirect": "",
+        "domotelec": "",
+        "domomat": "https://www.domomat.com/45333-chauffe-eau-electrique-cor-email-ths-2400w-pose-verticale-200l-de-dietrich-100019786.html",
+        "eau-go": "https://www.eau-go.fr/chauffe-eau-electrique-200l-de-dietrich-cor-email-ths-vertical-mural-10.html"
+        }
+    },
+  "Chauffe-eau électrique 150L THERMOR Duralis Vertical Mural Compact": {
+    "id": "871415-L",
+    "urls": {
+        "sobrico": "https://www.sobrico.com/chauffe-eau-et-ballon-d-eau-chaude/17718-chauffe-eau-150l-vertical-compact-duralis-aci-hybride-compact-o57-cm-monophase-thermor-871415.html",
+        "factorydirect": "https://www.factorydirect.fr/chauffe-eau-steatite-thermor-duralis-aci-compact-mural-150-litres-1057.php",
+        "domotelec": "https://www.domotelec.fr/chauffe-eau-ballon-d-eau-chaude/chauffe-eau-electrique/chauffe-eau-electrique-anti-corrosion/duralis-aci-hybride-150-litres-vertical-mural-compact.html",
+        "domomat": "https://www.domomat.com/17070-chauffe-eau-electrique-duralis-vertical-mural-compact-150l-1800w-570x1030mm-blanc-thermor-871415.html",
+        "eau-go": "https://www.eau-go.fr/chauffe-eau-electrique-150l-thermor-duralis-vertical-mural-123.html"
+        }
+    },
+  "Chauffe-eau électrique 250L ATLANTIC Zénéo Vertical sur Socle": {
+    "id": "154325-L",
+    "urls": {
+        "sobrico": "https://www.sobrico.com/chauffe-eau-et-ballon-d-eau-chaude/17454-chauffe-eau-250l-zeneo-vertical-sur-socle-aci-hybride-atlantic-154325.html",
+        "factorydirect": "https://www.factorydirect.fr/chauffe-eau-steatite-atlantic-zeneo-250-litres-aci-917.php",
+        "domotelec": "https://www.domotelec.fr/chauffe-eau-ballon-d-eau-chaude/chauffe-eau-electrique/chauffe-eau-electrique-anti-corrosion/zeneo-aci-hybride-250-litres-vertical-sur-socle-154325.html",
+        "domomat": "https://www.domomat.com/16244-chauffe-eau-electrique-aci-hybride-zeneo-vertical-sur-socle-250l-atlantic-154325.html",
+        "eau-go": "https://www.eau-go.fr/chauffe-eau-electrique-250l-atlantic-zeneo-vertical-sur-socle-107.html"
         }
     }
 }
