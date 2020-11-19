@@ -18,7 +18,7 @@ options.add_argument('--ignore-certificate-errors')
 options.add_argument('--ignore-ssl-errors')
 options.add_argument('log-level=3')
 browser = webdriver.Chrome("chromedriver.exe", options=options)
-
+start_col = 2
 # récupère le prix d'un produit spécifique
 def get_price(url, site):
     try :
@@ -77,6 +77,7 @@ def get_uniform_price(price, site):
         price = price.replace(" ", "")
         price = price.replace(",",".")
         price = price.replace("\u20ac","")
+    price = float(price)
 
     return price
 
@@ -86,18 +87,25 @@ def get_prices(product):
         products = json.load(f)
 
     comparison = list()
+    
     for i, a in enumerate(products):
-        for site in products[a]['urls'].keys():
+        ligne = [a, products[a]['id']]
+        for s in range(product['nb_stores']):
+            ligne.insert(start_col+s, 0)
+        
+        ligne.insert(product['nb_stores'], 0)
+        ligne.insert(product['nb_stores']+1, 0)
+
+        comparison.append(list(ligne))
+        for n, site in enumerate(products[a]['urls'].keys()):
             url = products[a]['urls'][site]
             if url != "" : 
                 price = get_price(url, site)
                 if price != None :
                     price = get_uniform_price(price, site)
-                    comparison.append([a, products[a]['id'], site, float(price), 0])
                 else :
-                    comparison.append([a, products[a]['id'], site, float(0), 0])
-            else :
-                comparison.append([a, products[a]['id'], site, float(0), 0])
+                    price = "Plus en stock"
+                comparison[i][start_col+n] = price
         
         print(product['type'] + " : "+str(i+1) +" sur " + str(len(products)) + " effectué(s).")
     return comparison
@@ -107,18 +115,33 @@ def get_prices(product):
 def compare_prices(product):
     comparison = get_prices(product)
     stores = product['nb_stores']
-    products = int(len(comparison)/stores)
+    products = len(comparison)
+    eaugo_price_id = len(comparison[0]) - 3
+
     for i in range(products) :
-        index = i*stores
-        prices = [comparison[i][3] for i in range(index, index+stores)]
-        prixMin = min([p for p in prices if p !=0.0])
-        idPrixMin = prices.index(prixMin)
-        if prices[-1] == prixMin :
-            comparison[index + stores - 1][4] = 1
+        prices = [comparison[i][p] for p in range(start_col,start_col+stores)]
+        min_price = min([p for p in prices if p !=0.0 and type(p)!= str])
+        min_price_id = prices.index(min_price) + start_col
+        eaugo_price = prices[-1]
+
+        if eaugo_price == min_price :
+            prices2 = [prices[i] for i in range(len(prices)-1) if prices[i] !=0.0 and type(prices[i])!= str]
+            if prices2 != []:
+                min_price2 = min(prices2)
+            else :
+                min_price2 = min_price
+            if min_price_id == eaugo_price_id :
+                comparison[i][-1] = (1 - eaugo_price / min_price2) * 100
+                comparison[i][-2] = eaugo_price_id
+            else:
+                comparison[i][-1] = 0
+                comparison[i][-2] = eaugo_price_id
         else :
-            comparison[index + idPrixMin][4] = 1
+            comparison[i][-1] = (1 - min_price / eaugo_price) * 100
+            comparison[i][-2] = min_price_id
+
     return comparison
-    
+
 
 #crée le fichier excel
 def create_file(product,):
@@ -137,30 +160,46 @@ def create_file(product,):
 
     wb.create_sheet(index = 0, title = date)
     ws = wb.worksheets[0]
+    ws.cell(row=1, column=1).value = "Produit"
+    ws.cell(row=1, column=2).value = "Référence"
 
-    row = 1
+    if product['type'] == "Chauffe eaux":
+        ws.cell(row=1, column=3).value = "Sobrico"
+        ws.cell(row=1, column=4).value = "Factorydirect"
+        ws.cell(row=1, column=5).value = "Domotelec"
+        ws.cell(row=1, column=6).value = "Domomat"
+        ws.cell(row=1, column=7).value = "Eau-go"
+        ws.cell(row=1, column=8).value = "Ecart"
+    elif product['type'] == "Adoucisseurs":
+        ws.cell(row=1, column=3).value = "Manomano"
+        ws.cell(row=1, column=4).value = "Sanitaire-pas-cher"
+        ws.cell(row=1, column=5).value = "Domomat"
+        ws.cell(row=1, column=6).value = "Eau-go"
+        ws.cell(row=1, column=7).value = "Ecart"
+
+    row = 2
     col = 1
+    stores = product['nb_stores']
+    eaugo_price_id = len(comparison[0]) - 3
 
-    for nom, identifiant, site, price, cheapest in (comparison):
-        ws.cell(row=row, column=col).value = nom
-        ws.cell(row=row, column=col + 1).value = identifiant
-        ws.cell(row=row, column=col + 2).value = site
-        ws.cell(row=row, column=col + 3).value = price
+    for i in range(len(comparison)):
+        ws.cell(row=row, column=col).value = comparison[i][0]
+        ws.cell(row=row, column=col + 1).value = comparison[i][1]
+        for s in range(start_col, start_col+stores):
 
-        if cheapest == 1 and site != "eau-go":
-            ws.cell(row=row, column=col + 3).font = Font(bold=True, color = "FF0000")
-        elif cheapest == 1 and site == "eau-go":
-            ws.cell(row=row, column=col + 3).font = Font(bold=True, color = "1B7B0F")
-        
-        if site == "eau-go" :
-            row +=1
+            ws.cell(row=row, column=col + s).value = comparison[i][s]
+            if s == comparison[i][-2]:
+                if s != eaugo_price_id:
+                    ws.cell(row=row, column=col + s).font = Font(bold=True, color = "FF0000")
+                else:
+                    ws.cell(row=row, column=col + s).font = Font(bold=True, color = "1B7B0F")
+        ws.cell(row=row, column= col + start_col+stores).value = str(int(comparison[i][-1])) + "%"
         row += 1
 
     wb.save(comparison_file)
 
 category = {"adoucisseur": {"json": "adoucisseurs.json", "excel": "comparaison_adoucisseurs.xlsx", "nb_stores": 4, "type": "Adoucisseurs"},
 "chauffe_eau": {"json": "chauffe_eaux.json", "excel": "comparaison_chauffe_eaux.xlsx", "nb_stores": 5, "type": "Chauffe eaux"}}
-
 
 for c in category :
     create_file(category[c])
