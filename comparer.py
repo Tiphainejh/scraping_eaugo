@@ -18,6 +18,7 @@ options.add_argument('--ignore-certificate-errors')
 options.add_argument('--ignore-ssl-errors')
 options.add_argument('log-level=3')
 browser = webdriver.Chrome("chromedriver.exe", options=options)
+
 start_col = 2
 # récupère le prix d'un produit spécifique
 def get_price(url, site):
@@ -128,18 +129,26 @@ def compare_prices(product):
             prices2 = [prices[i] for i in range(len(prices)-1) if prices[i] !=0.0 and type(prices[i])!= str]
             if prices2 != []:
                 min_price2 = min(prices2)
+
             else :
                 min_price2 = min_price
+
             if min_price_id == eaugo_price_id :
-                comparison[i][-1] = (1 - eaugo_price / min_price2) * 100
+                if (type(min_price2) != type(eaugo_price)):
+                    comparison[i][-1] = 0
+                else :
+                    comparison[i][-1] = (1 - eaugo_price / min_price2) * 100
                 comparison[i][-2] = eaugo_price_id
             else:
                 comparison[i][-1] = 0
                 comparison[i][-2] = eaugo_price_id
+            
         else :
-            comparison[i][-1] = (1 - min_price / eaugo_price) * 100
+            if (type(min_price) != type(eaugo_price)):
+                comparison[i][-1] = 0.0
+            else :
+                comparison[i][-1] = (1 - min_price / eaugo_price) * 100
             comparison[i][-2] = min_price_id
-
     return comparison
 
 
@@ -198,8 +207,9 @@ def create_file(product,):
 
     wb.save(comparison_file)
 
-category = {"adoucisseur": {"json": "adoucisseurs.json", "excel": "comparaison_adoucisseurs.xlsx", "nb_stores": 4, "type": "Adoucisseurs"},
-"chauffe_eau": {"json": "chauffe_eaux.json", "excel": "comparaison_chauffe_eaux.xlsx", "nb_stores": 5, "type": "Chauffe eaux"}}
+category = {"chauffe_eau": {"json": "chauffe_eaux.json", "excel": "comparaison_chauffe_eaux.xlsx", "nb_stores": 5, "type": "Chauffe eaux"}
+, "adoucisseur": {"json": "adoucisseurs.json", "excel": "comparaison_adoucisseurs.xlsx", "nb_stores": 4, "type": "Adoucisseurs"}
+}
 
 for c in category :
     create_file(category[c])
