@@ -1,15 +1,19 @@
 import time
+import os
+import numpy as np
 from bs4 import BeautifulSoup
-import json
 from selenium import webdriver
 from datetime import datetime
-import requests
-import os
 import urllib3
+from openpyxl.utils.cell import get_column_letter
 from openpyxl import load_workbook
 from openpyxl.styles import Font, Color
 from openpyxl.workbook import Workbook
-import sys
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait as wait
+from selenium.webdriver.support import expected_conditions as EC
+
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 options = webdriver.ChromeOptions()
@@ -17,199 +21,149 @@ options.add_argument('headless')
 options.add_argument('--ignore-certificate-errors')
 options.add_argument('--ignore-ssl-errors')
 options.add_argument('log-level=3')
-browser = webdriver.Chrome("chromedriver.exe", options=options)
+driver = webdriver.Chrome("chromedriver.exe", options=options)
 
-start_col = 2
-# récupère le prix d'un produit spécifique
-def get_price(url, site):
-    try :
-        if site =="sanitaire-pas-cher":
-            r = requests.get(url,verify=False, headers={"Host": "www.sanitaire-pas-cher.fr"})
-            soup = BeautifulSoup(r.text, 'lxml')
-            div = soup.find(id="main")
-            price = div.find(class_="product-price")
-        else :
-            browser.get(url)
-            soup = BeautifulSoup(browser.page_source, 'html.parser')
-            if site =="sobrico":
-                price = soup.find(class_="product__price-actual")
-                if price != None :
-                    price = price['content']
-            elif site == "manomano":
-                price = soup.find(class_="prices__price prices__main-price__price")
-                while price == None: #sometimes selenium returns None
-                    r = requests.get(url)
-                    soup = BeautifulSoup(r.text, 'lxml')
-                    price = soup.find(class_="prices__price prices__main-price__price")
-                price=price.find(class_="price-integer")
-            elif site == "domotelec" or site == "factorydirect":
-                price = soup.find(class_="price")
-            elif site == "eau-go" or site == "domomat":
-                price = soup.find(class_="our_price_display")
-        return price
+products = []
+productsPrices = []
+comparison = []
+sellers = ["Sobrico.com", "Factorydirect", "Domotelec", "ManoMano.fr", "Domomat.com", "Sanitaire-pas-cher", "Eau-Go"]
+header = ["Produit","Référence"]
+header.extend(sellers)
+header.append("Ecart")
 
-    except Exception as ex:
-        template = "An exception of type {0} occurred. Arguments:\n{1!r}"
-        message = template.format(type(ex).__name__, ex.args)
-        print(message)
-        sys.exit(1)
+eaugo_price_id = 0
+nStores = len(sellers)
+nProducts = 30
 
-# Uniformise les prix des produits
-def get_uniform_price(price, site):
-    if type(price) is not str:
-        price = price.text
+def compare_prices(product, eaugo_price_id):
+    min_price = min([p for p in product if isinstance(p, float)])
+    min_price_id = product.index(min_price)
+    eaugo_price = product[eaugo_price_id]
+    print(product)
+    if eaugo_price == min_price :
+        prices = product[:-3]
+        sec_min_price = min([p for p in prices if isinstance(p, float)]) if prices != [] else min_price
 
-    if site == "sobrico" :
-        pass
-    elif site == "domotelec":
-        price = price.replace("\u20ac","")
-        price = price.replace("\xa0","")
-        price = price.replace(",",".")
-    elif site == "factorydirect":
-        price = price.replace("\u20ac","")
-    elif site == "sanitaire-pas-cher" :
-        price = price.replace(",",".")
-        price = price.replace("\xa0","")
-        price = price.replace("\u20ac","")
-    elif site == "manomano":
-        price = price.replace(" ","")
-    elif site == "eau-go" or site == "domomat": 
-        price = price.replace("TTC", "")
-        price = price.replace(" ", "")
-        price = price.replace(",",".")
-        price = price.replace("\u20ac","")
-    price = float(price)
+        if min_price_id == eaugo_price_id :
+            product[-1] = (1 - eaugo_price / sec_min_price) * 100
+            product[-2] = eaugo_price_id
+        else:
+            product[-1] = 0
+            product[-2] = min_price_id
+    else :
+        print(min_price)
+        print(eaugo_price)
+        product[-1] = (1 - min_price / eaugo_price) * 100
+        product[-2] = min_price_id
 
-    return price
+    return product
 
-def get_prices(product):
 
-    with open((product['json']), 'r') as f:
-        products = json.load(f)
+def create_file(productPrices):
+    global nStores 
 
-    comparison = list()
-    
-    for i, a in enumerate(products):
-        ligne = [a, products[a]['id']]
-        for s in range(product['nb_stores']):
-            ligne.insert(start_col+s, 0)
+    wb = load_workbook(filename = 'suivi.xlsx')
+    sheet = wb.active
+    rows = sheet.rows
+
+    for r in range(2, sheet.max_row):
+        products.append([sheet.cell(row=r, column=1).value])
+        products[r-2].append(sheet.cell(row=r, column=3).value)
+        products[r-2].append(sheet.cell(row=r, column=10).value)
+
+    priceRows = []
+
+    for i, product in enumerate(products[10:11]) :
+        search_page = "https://www.google.fr/search?tbm=shop&q="+str(product[2])+"&restrictBy=gtin="+str(product[2])
+        buttonXPath = '//*[@id="yDmH0d"]/c-wiz/div/div/div[2]/div[1]/div[4]/form/div[1]/div/button'
+        tableClass = "sh-osd__offer-row"
+        priceID = "QXiyfd"
+        searchID = "search"
+        driver.get(search_page)
+        soup = BeautifulSoup(driver.page_source, 'html.parser')
         
-        ligne.insert(product['nb_stores'], 0)
-        ligne.insert(product['nb_stores']+1, 0)
+        try :
+            button = driver.find_element_by_xpath(buttonXPath)
+            button.click()
+        except:
+            pass
 
-        comparison.append(list(ligne))
-        for n, site in enumerate(products[a]['urls'].keys()):
-            url = products[a]['urls'][site]
-            if url != "" : 
-                price = get_price(url, site)
-                if price != None :
-                    price = get_uniform_price(price, site)
-                else :
-                    price = "Plus en stock"
-                comparison[i][start_col+n] = price
+        page = wait(driver, 60).until(EC.visibility_of_element_located((By.ID, searchID)))
+        soup = BeautifulSoup(driver.page_source, 'html.parser')
+ 
+        url = soup.find_all(lambda tag:tag.name=="a" and "Comparer" in tag.text)[0]["href"].split("?")[0]
+        if "/offers" in url: 
+            url.replace("/offers", "")
+        comp_page = "https://www.google.com" + url + "/online"
+        print(product[2])
+        print(comp_page)
+        driver.get(comp_page)
+        table = wait(driver, 20).until(EC.visibility_of_element_located((By.CLASS_NAME,tableClass)))
+
+        table = driver.find_elements_by_class_name(tableClass)
+
+
+        found = False
+        priceRows.append([product[0],product[1]])
+        for seller in sellers :
+            for row in table :
+                if seller in row.text:
+                    price = row.find_element_by_class_name(priceID)
+                    price = float(price.text.replace("\u20ac","").replace("\xa0","").replace("\u202f","").replace(",","."))
+                    priceRows[i].append(price)
+                    found = True
+                    break
+            if found == False:
+                priceRows[i].append(" ")
+            found = False
+
         
-        print(product['type'] + " : "+str(i+1) +" sur " + str(len(products)) + " effectué(s).")
-    return comparison
+        priceRows[i].append(" ")
+        priceRows[i].append(" ")
+        # append sellers
+        nSellers = len(sellers)
 
+        time.sleep((30-5)*np.random.random()+5)
+        print(str(i+1)+"/"+str(nProducts))
 
-#compare les prix 
-def compare_prices(product):
-    comparison = get_prices(product)
-    stores = product['nb_stores']
-    products = len(comparison)
-    eaugo_price_id = len(comparison[0]) - 3
+    date = datetime.now().strftime("%Y-%m-%d")
 
-    for i in range(products) :
-        prices = [comparison[i][p] for p in range(start_col,start_col+stores)]
-        min_price = min([p for p in prices if p !=0.0 and type(p)!= str])
-        min_price_id = prices.index(min_price) + start_col
-        eaugo_price = prices[-1]
-
-        if eaugo_price == min_price :
-            prices2 = [prices[i] for i in range(len(prices)-1) if prices[i] !=0.0 and type(prices[i])!= str]
-            if prices2 != []:
-                min_price2 = min(prices2)
-
-            else :
-                min_price2 = min_price
-
-            if min_price_id == eaugo_price_id :
-                if (type(min_price2) != type(eaugo_price)):
-                    comparison[i][-1] = 0
-                else :
-                    comparison[i][-1] = (1 - eaugo_price / min_price2) * 100
-                comparison[i][-2] = eaugo_price_id
-            else:
-                comparison[i][-1] = 0
-                comparison[i][-2] = eaugo_price_id
-            
-        else :
-            if (type(min_price) != type(eaugo_price)):
-                comparison[i][-1] = 0.0
-            else :
-                comparison[i][-1] = (1 - min_price / eaugo_price) * 100
-            comparison[i][-2] = min_price_id
-    return comparison
-
-
-#crée le fichier excel
-def create_file(product,):
-    comparison = compare_prices(product)
-    date_time = datetime.now()
-    date = date_time.strftime("%Y-%m-%d")
-
-    comparison_file = product['excel']
+    comparison_file = "comparaison.xlsx"
     if os.path.exists(comparison_file) :
         wb = load_workbook(comparison_file)
     else :
         wb = Workbook()
 
     if date in wb.sheetnames :
-        date = date_time.strftime("%Y-%m-%d %H %M %S")
+        date = datetime.now().strftime("%Y-%m-%d %H %M %S")
 
     wb.create_sheet(index = 0, title = date)
     ws = wb.worksheets[0]
-    ws.cell(row=1, column=1).value = "Produit"
-    ws.cell(row=1, column=2).value = "Référence"
-
-    if product['type'] == "Chauffe eaux":
-        ws.cell(row=1, column=3).value = "Sobrico"
-        ws.cell(row=1, column=4).value = "Factorydirect"
-        ws.cell(row=1, column=5).value = "Domotelec"
-        ws.cell(row=1, column=6).value = "Domomat"
-        ws.cell(row=1, column=7).value = "Eau-go"
-        ws.cell(row=1, column=8).value = "Ecart"
-    elif product['type'] == "Adoucisseurs":
-        ws.cell(row=1, column=3).value = "Manomano"
-        ws.cell(row=1, column=4).value = "Sanitaire-pas-cher"
-        ws.cell(row=1, column=5).value = "Domomat"
-        ws.cell(row=1, column=6).value = "Eau-go"
-        ws.cell(row=1, column=7).value = "Ecart"
-
-    row = 2
-    col = 1
-    stores = product['nb_stores']
-    eaugo_price_id = len(comparison[0]) - 3
-
-    for i in range(len(comparison)):
-        ws.cell(row=row, column=col).value = comparison[i][0]
-        ws.cell(row=row, column=col + 1).value = comparison[i][1]
-        for s in range(start_col, start_col+stores):
-
-            ws.cell(row=row, column=col + s).value = comparison[i][s]
-            if s == comparison[i][-2]:
-                if s != eaugo_price_id:
-                    ws.cell(row=row, column=col + s).font = Font(bold=True, color = "FF0000")
+    eaugo_price_id = header.index("Eau-Go")
+    for j in range(1, len(priceRows)+1) :
+        comparison = compare_prices(priceRows[j-1], eaugo_price_id)
+        print(comparison)
+        ws.cell(row=j, column=1).value = comparison[0]
+        ws.cell(row=j, column=2).value = comparison[1]
+        for s in range(3, 3+nStores):
+            ws.cell(row=j, column=s).value = comparison[s-1]
+            if s == (comparison[-2]+1):
+                if comparison[-2] != (eaugo_price_id):
+                    ws.cell(row=j, column=s).font = Font(bold=True, color = "FF0000")
                 else:
-                    ws.cell(row=row, column=col + s).font = Font(bold=True, color = "1B7B0F")
-        ws.cell(row=row, column= col + start_col+stores).value = str(int(comparison[i][-1])) + "%"
-        row += 1
+                    ws.cell(row=j, column=s).font = Font(bold=True, color = "F1C40F")
+        ws.cell(row=j, column=3+nStores).value = str(int(comparison[-1])) + "%"
 
+    ws.insert_rows(1)
+    for i, h in enumerate(header):
+        ws.cell(row=1, column=i+1).value = h
+    for col in ws.columns:
+        ws.column_dimensions[get_column_letter(col[0].column)].width = 10
     wb.save(comparison_file)
+    return "Done"
 
-category = {"chauffe_eau": {"json": "chauffe_eaux.json", "excel": "comparaison_chauffe_eaux.xlsx", "nb_stores": 5, "type": "Chauffe eaux"}
-, "adoucisseur": {"json": "adoucisseurs.json", "excel": "comparaison_adoucisseurs.xlsx", "nb_stores": 4, "type": "Adoucisseurs"}
-}
 
-for c in category :
-    create_file(category[c])
+print(create_file(productsPrices))
+
+#?prds=scoring:p
+#?prds=epd
