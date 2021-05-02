@@ -41,7 +41,6 @@ header.append("Ecart")
 
 eaugo_price_id = 0
 nStores = len(sellers) + 1
-nProducts = 28
 suivi = pd.read_excel("suivi.xlsx")
 code_shopping = pd.read_excel("code_shopping.xlsx")
 
@@ -68,7 +67,7 @@ def compare_prices(product, eaugo_price_id):
     return product
 
 def getPrices(products, priceRows, driver, startProduct = 0):
-    for i, product in enumerate(products[startProduct:nProducts]) :
+    for i, product in enumerate(products[startProduct:]) :
         i += startProduct
         try :
             googleShoppingCode = fichier_produits["google_shopping"][i].replace("\"","")
@@ -76,11 +75,19 @@ def getPrices(products, priceRows, driver, startProduct = 0):
             priceRows.append([product[0],product[1]])
             continue
         comp_page = "https://www.google.com/shopping/product/" + googleShoppingCode + "/online"
+        #print(comp_page)
         buttonXPath = '//*[@id="yDmH0d"]/c-wiz/div/div/div[2]/div[1]/div[4]/form/div[1]/div/button'
         tableClass = "sh-osd__offer-row"
         priceID = "QXiyfd"
         searchID = "search"
         driver.get(comp_page)
+        """
+        try : 
+            driver.get(comp_page)
+        except TimeoutException as ex:
+            priceRows = getPrices(products, priceRows, driver, i)
+            return priceRows
+        """
         soup = BeautifulSoup(driver.page_source, 'html.parser')
 
         try :
@@ -88,7 +95,6 @@ def getPrices(products, priceRows, driver, startProduct = 0):
             button.click()
         except:
             pass
- 
         driver.get(comp_page)
         try :
             table = wait(driver, 20).until(EC.visibility_of_element_located((By.CLASS_NAME,tableClass)))
@@ -119,7 +125,7 @@ def getPrices(products, priceRows, driver, startProduct = 0):
         nSellers = len(sellers)
 
         time.sleep((30-5)*np.random.random()+5)
-        print(str(i+1)+"/"+str(nProducts))
+        print(str(i+1)+"/"+str(len(products)))
     return priceRows
     
 def create_file(productPrices):
@@ -127,7 +133,6 @@ def create_file(productPrices):
     wb = load_workbook(filename = 'suivi.xlsx')
     sheet = wb.active
     rows = sheet.rows
-
     for r in range(2, sheet.max_row):
         products.append([sheet.cell(row=r, column=1).value])
         products[r-2].append(sheet.cell(row=r, column=3).value)
@@ -161,7 +166,7 @@ def create_file(productPrices):
                     ws.cell(row=j, column=s).font = Font(bold=True, color = "FF0000")
                 else:
                     ws.cell(row=j, column=s).font = Font(bold=True, color = "F1C40F")
-        ws.cell(row=j, column=3+nStores).value = str(int(comparison[-1])) + "%"
+        ws.cell(row=j, column=3+nStores-1).value = str(int(comparison[-1])) + "%"
 
     ws.insert_rows(1)
     for i, h in enumerate(header):
