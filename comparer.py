@@ -19,14 +19,16 @@ import pandas as pd
 import chromedriver_autoinstaller
 chromedriver_autoinstaller.install()
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+from fake_useragent import UserAgent
 
 def create_browser():
-        options = webdriver.ChromeOptions()
-        options.add_argument('headless')
-        options.add_argument('--ignore-certificate-errors')
-        options.add_argument('--ignore-ssl-errors')
-        options.add_argument('log-level=3')
-        return webdriver.Chrome(options=options)
+    options = webdriver.ChromeOptions()
+    options.add_argument('headless')
+    options.add_argument('--ignore-certificate-errors')
+    options.add_argument('--ignore-ssl-errors')
+    options.add_argument('log-level=3')
+
+    return webdriver.Chrome(options=options)
 
 products = []
 productsPrices = []
@@ -50,6 +52,10 @@ def compare_prices(product, eaugo_price_id):
     min_price = min([p for p in product if isinstance(p, float)])
     min_price_id = product.index(min_price)
     eaugo_price = product[eaugo_price_id]
+    if eaugo_price == " " :
+        product[-1] = 0
+        product[-2] = -1
+        return product
     if eaugo_price == min_price :
         prices = product[:-3]
         sec_min_price = min([p for p in prices if isinstance(p, float)]) if prices != [] else min_price
@@ -74,13 +80,15 @@ def getPrices(products, priceRows, driver, startProduct = 0):
         except :
             priceRows.append([product[0],product[1]])
             continue
-        comp_page = "https://www.google.com/shopping/product/" + googleShoppingCode + "/online"
-        #print(comp_page)
+        comp_page = "https://www.google.com/shopping/product/" + googleShoppingCode + "/offers"
+        print(comp_page)
         buttonXPath = '//*[@id="yDmH0d"]/c-wiz/div/div/div[2]/div[1]/div[4]/form/div[1]/div/button'
         tableClass = "sh-osd__offer-row"
-        priceID = "QXiyfd"
+        priceID = "g9WBQb"
         searchID = "search"
+        
         driver.get(comp_page)
+        
         """
         try : 
             driver.get(comp_page)
