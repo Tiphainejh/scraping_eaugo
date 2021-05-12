@@ -19,7 +19,6 @@ import pandas as pd
 import chromedriver_autoinstaller
 chromedriver_autoinstaller.install()
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-from fake_useragent import UserAgent
 
 def create_browser():
     options = webdriver.ChromeOptions()
