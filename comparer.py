@@ -43,9 +43,9 @@ header.append("Ecart")
 eaugo_price_id = 0
 nStores = len(sellers) + 1
 suivi = pd.read_excel("suivi.xlsx")
-code_shopping = pd.read_excel("code_shopping.xlsx")
+#code_shopping = pd.read_excel("code_shopping.xlsx") #ici
 
-fichier_produits = suivi.merge(code_shopping, on="gtin", how="outer")
+#fichier_produits = suivi.merge(code_shopping, on="gtin", how="outer") #ici
 
 def compare_prices(product, eaugo_price_id):
     product_list = [p for p in product if isinstance(p, float)]
@@ -90,7 +90,7 @@ def getPrices(products, priceRows, driver, startProduct = 0):
     for i, product in enumerate(products[startProduct:]) :
         i += startProduct
         try :
-            googleShoppingCode = fichier_produits["google_shopping"][i].replace("\"","")
+            googleShoppingCode = suivi["google_shopping"][i].replace("\"","")
         except :
             priceRows.append([product[0],product[1]])
             continue
@@ -159,8 +159,8 @@ def create_file(productPrices):
     # rempli le fichier excel avec les vendeurs
     for r in range(2, sheet.max_row):
         products.append([sheet.cell(row=r, column=1).value])
+        products[r-2].append(sheet.cell(row=r, column=2).value)
         products[r-2].append(sheet.cell(row=r, column=3).value)
-        products[r-2].append(sheet.cell(row=r, column=10).value)
 
     priceRows = []
     driver = create_browser()
