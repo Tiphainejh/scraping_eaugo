@@ -48,23 +48,38 @@ code_shopping = pd.read_excel("code_shopping.xlsx")
 fichier_produits = suivi.merge(code_shopping, on="gtin", how="outer")
 
 def compare_prices(product, eaugo_price_id):
-    min_price = min([p for p in product if isinstance(p, float)])
-    min_price_id = product.index(min_price)
+    product_list = [p for p in product if isinstance(p, float)]
     eaugo_price = product[eaugo_price_id]
-    if eaugo_price == " " :
+    
+    # si les vendeurs ne sont pas presents sur la page
+    if product_list == [] or eaugo_price == " ":
         product[-1] = 0
         product[-2] = -1
         return product
+
+    min_price = min(product_list)
+    min_price_id = product.index(min_price)
+
+    # si eaugo est le moins cher
     if eaugo_price == min_price :
         prices = product[:-3]
-        sec_min_price = min([p for p in prices if isinstance(p, float)]) if prices != [] else min_price
-
+        product_list = [p for p in prices if isinstance(p, float)]
+        
+        # s'il n'y a que eau-go dans la liste
+        if product_list == []:
+            product[-1] = 0
+            product[-2] = -1
+            return product
+        sec_min_price = min(product_list) if prices != [] else min_price
+        
+        # si eau-go est le moins cher (vérif s'il y a deux fois le même prix minimum)
         if min_price_id == eaugo_price_id :
             product[-1] = (1 - eaugo_price / sec_min_price) * 100
             product[-2] = eaugo_price_id
         else:
             product[-1] = 0
             product[-2] = min_price_id
+    # un autre vendeur est le moins cher
     else :
         product[-1] = (1 - min_price / eaugo_price) * 100
         product[-2] = min_price_id
@@ -140,6 +155,8 @@ def create_file(productPrices):
     wb = load_workbook(filename = 'suivi.xlsx')
     sheet = wb.active
     rows = sheet.rows
+
+    # rempli le fichier excel avec les vendeurs
     for r in range(2, sheet.max_row):
         products.append([sheet.cell(row=r, column=1).value])
         products[r-2].append(sheet.cell(row=r, column=3).value)
@@ -162,6 +179,8 @@ def create_file(productPrices):
     wb.create_sheet(index = 0, title = date)
     ws = wb.worksheets[0]
     eaugo_price_id = header.index("Eau-Go")
+
+
     for j in range(1, len(priceRows)+1) :
         comparison = compare_prices(priceRows[j-1], eaugo_price_id)
         ws.cell(row=j, column=1).value = comparison[0]
@@ -169,13 +188,17 @@ def create_file(productPrices):
         for s in range(3, 3+nStores):
             ws.cell(row=j, column=s).value = comparison[s-1]
             if s == (comparison[-2]+1):
+                # si un autre vendeur est moins cher
                 if comparison[-2] != (eaugo_price_id):
                     ws.cell(row=j, column=s).font = Font(bold=True, color = "FF0000")
+                # si eaugo est moins cher
                 else:
                     ws.cell(row=j, column=s).font = Font(bold=True, color = "F1C40F")
+        # colonne des poucentages de prix
         ws.cell(row=j, column=3+nStores-1).value = str(int(comparison[-1])) + "%"
 
     ws.insert_rows(1)
+    # mise en forme du fichier excel (header, taille des colonnes)
     for i, h in enumerate(header):
         ws.cell(row=1, column=i+1).value = h
     for col in ws.columns:
