@@ -3,7 +3,7 @@ from cx_Freeze import setup, Executable
 #base = "Win32GUI"
 base = "Console"
 executables = [Executable(script = 'comparer.py', base=base)]
-includefiles = ["suivi.xlsx", "code_shopping.xlsx", "LISEZMOI.md", "vendeurs.xlsx"]
+includefiles = ["suivi.xlsx", "LISEZMOI.md", "vendeurs.xlsx"]
 packages = ["time", "os", "sys", "numpy", "bs4", "datetime", "urllib3", "openpyxl", "selenium", "pandas", "chromedriver_autoinstaller"]
 options = { 'build_exe': { 'packages':packages, 'include_files':includefiles}}
 
